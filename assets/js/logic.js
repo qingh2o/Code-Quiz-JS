@@ -21,5 +21,20 @@ var questionIndex = 0;
 
 // A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
+    timerEl.textContent = 75;
+    //Change to question screen
+    startScreenEl.setAttribute("class", "hide");
+    questionsScreenEl.setAttribute("class", "start");
+    startTimer();
 
 });
+
+function startTimer() {
+    var timerInterval = setInterval(function () { 
+      timerOnDisplay--;
+      timerEl.textContent = timerOnDisplay;
+        if (timerOnDisplay === 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+};
