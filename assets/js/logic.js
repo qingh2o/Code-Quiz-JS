@@ -5,6 +5,7 @@ var startButton = document.querySelector("#start");
 var startScreenEl = document.querySelector("#start-screen");
 // Questions screen
 var questionsScreenEl = document.querySelector("#questions");
+var questionTile = document.querySelector("#question-title");
 var choicesEl = document.querySelector("#choices");
 var feedbackEl = document.querySelector("#feedback");
 // End screen
@@ -26,8 +27,23 @@ startButton.addEventListener("click", function () {
     startScreenEl.setAttribute("class", "hide");
     questionsScreenEl.setAttribute("class", "start");
     startTimer();
+    showQuestion();
 
 });
+
+function showQuestion() {
+    var currentQuestion = questions[questionIndex].question;
+    questionTile.textContent = currentQuestion;
+    var currentChoices = questions[questionIndex].choices;
+
+    //create button for each choice
+    for (var j = 0; j < currentChoices.length; j++) {
+        var choiceButton = document.createElement("button");
+        choiceButton.textContent = currentChoices[j];
+        choicesEl.appendChild(choiceButton);
+    };
+};
+
 
 function startTimer() {
     var timerInterval = setInterval(function () { 
