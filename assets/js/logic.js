@@ -14,43 +14,67 @@ var initialsInput = document.querySelector("#initials");
 var finalScoreEl = document.querySelector("#final-score");
 var submitButton = document.querySelector("#submit");
 
-
-console.log(startButton);
-
 var timerOnDisplay = 75;
 var questionIndex = 0;
 
 // A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
     timerEl.textContent = 75;
+
     //Change to question screen
     startScreenEl.setAttribute("class", "hide");
     questionsScreenEl.setAttribute("class", "start");
     startTimer();
     showQuestion();
-
 });
+// Function to display a question
+function startTimer() {
+    var timerInterval = setInterval(function () {
+        timerOnDisplay--;
+        timerEl.textContent = timerOnDisplay;
+        if (timerOnDisplay === 0) {
+            clearInterval(timerInterval);
+            endQuiz();
+        }
+    }, 1000);
+};
 
+// Function to display a question
 function showQuestion() {
     var currentQuestion = questions[questionIndex].question;
     questionTile.textContent = currentQuestion;
-    var currentChoices = questions[questionIndex].choices;
+    choicesEl.innerHTML = "";
 
-    //create button for each choice
-    for (var j = 0; j < currentChoices.length; j++) {
+    //Questions contain buttons for each answer.
+    var currentChoices = questions[questionIndex].choices;
+    for (var i = 0; i < currentChoices.length; i++) {
         var choiceButton = document.createElement("button");
-        choiceButton.textContent = currentChoices[j];
+        choiceButton.textContent = currentChoices[i];
         choicesEl.appendChild(choiceButton);
     };
 };
 
+// When answer is clicked, the next question appears
+choicesEl.addEventListener("click", function (event) {
+    var userAnswer = event.target;
 
-function startTimer() {
-    var timerInterval = setInterval(function () { 
-      timerOnDisplay--;
-      timerEl.textContent = timerOnDisplay;
-        if (timerOnDisplay === 0) {
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-};
+    //If the answer clicked was incorrect then subtract time from the clock
+    if (userAnswer.textContent === questions[questionIndex].correctAnswer) {
+        feedbackEl.setAttribute("class", "start");
+        feedbackEl.textContent = "Correct!";
+    } else {
+        feedbackEl.setAttribute("class", "start");
+        feedbackEl.textContent = "Incorrect!";
+        timerOnDisplay -= 15;
+    }
+    // 
+    questionIndex++;
+    if (timerOnDisplay > 0 && questionIndex < questions.length) {
+        showQuestion();
+    } else {
+        //Change to end screen
+        endQuiz();
+    }
+});
+
+
