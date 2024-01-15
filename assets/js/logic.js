@@ -21,11 +21,6 @@ startButton.addEventListener("click", function () {
     startScreenEl.setAttribute("class", "hide");
     questionsScreenEl.setAttribute("class", "start");
     questionsScreenEl.setAttribute("style", "text-align: left");
-    startTimer();
-    showQuestion();
-});
-//Function to display a question
-function startTimer() {
     timerInterval = setInterval(function () {
         if (timerOnDisplay > 0) {
             timerOnDisplay--;
@@ -37,7 +32,8 @@ function startTimer() {
             endQuiz();
         }
     }, 1000);
-};
+    showQuestion();
+});
 
 // Function to display a question
 function showQuestion() {
@@ -55,22 +51,25 @@ function showQuestion() {
 };
 
 // When answer is clicked, the next question appears
+
 choicesEl.addEventListener("click", function (event) {
     var userAnswer = event.target;
     feedbackEl.setAttribute("class", "feedback start");
     feedbackEl.setAttribute("style", "text-align: left");
+
     //If the answer clicked was incorrect then subtract time from the clock
     if (userAnswer.textContent === questions[questionIndex].correctAnswer) {
-        feedbackEl.textContent = "Correct!";
+        feedbackEl.textContent = "Question " + [questionIndex + 1] + ": Correct!";
     } else {
-        feedbackEl.textContent = "Incorrect!";
-        timerOnDisplay -= 15;
+        feedbackEl.textContent = "Question " + [questionIndex + 1] + ": Incorrect!";
+        timerOnDisplay -= 10;
         // Ensure that timerOnDisplay does not go below 0
         if (timerOnDisplay < 0) {
             timerOnDisplay = 0;
-            timerEl.textContent = timerOnDisplay;   
+            timerEl.textContent = timerOnDisplay;
         }
     }
+
     questionIndex++;
     // The quiz should end when all questions are answered or the timer reaches 0. 
     if (timerOnDisplay > 0 && questionIndex < questions.length) {
@@ -79,5 +78,36 @@ choicesEl.addEventListener("click", function (event) {
         //Change to end screen
         endQuiz();
     }
+});
+
+
+
+// When the game ends, it should display their score and give the user the ability to save their initials and their score
+function endQuiz() {
+    finalScoreEl.textContent = timerOnDisplay;
+    endScreenEl.setAttribute("class", "start");
+    endScreenEl.setAttribute("style", "text-align: left");
+    questionsScreenEl.setAttribute("class", "hide");
+    
+};
+
+var inputDisplay = "";
+initialsInput.addEventListener("keyup", function (event) {  
+    event.preventDefault();
+    feedbackEl.setAttribute("class", "hide");
+    initialsInput.value = initialsInput.value.toUpperCase();
+    // Access value of pressed key with key property
+    // var userInput = event.key.toUpperCase();
+    // var alphabetNumericCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789 '.split('');
+
+    // // Set the maxlength attribute based on the HTML max attribute
+    initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));
+
+    // if (alphabetNumericCharacters.includes(userInput)) {
+    //     initialsInput.value += userInput;
+    // };
+     
+    // console.log(userInput);
+    // console.log(initialsInput);
 });
 
