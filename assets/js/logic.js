@@ -18,7 +18,7 @@ var correctAudio = new Audio("./assets/sfx/correct.wav");
 var incorrectAudio = new Audio("./assets/sfx/incorrect.wav");
 
 //---------Start Screen----------
-// A start button that when clicked a timer starts and the first question appears.
+//A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
     //75 displayed on screen
     timerEl.textContent = 75;
@@ -122,7 +122,7 @@ initialsInput.addEventListener("input", function () {
     initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));
 });
 
-// Submit the user input and time/score
+//Submit the user input and time/score
 submitButton.addEventListener("click", saveInitialsScore);
 
 function saveInitialsScore() {
@@ -131,7 +131,7 @@ function saveInitialsScore() {
         alert("Error: \nPlease enter your initials!");
         return;
     } else {
-        // Redirect to highscores.html
+        //Redirect to highscores.html
         window.location.href = "highscores.html";
 
         //Save 'inputDisplay' for initials and 'timerOnDisplay' for the score
@@ -140,25 +140,25 @@ function saveInitialsScore() {
             userScore: timerOnDisplay
         };
 
-        // Retrieve data from local storage
+        //Retrieve data from local storage
         var localStorageKey = "SavedScoreList";
         var localStorageData = localStorage.getItem(localStorageKey);
 
-        // Check if data exists
+        //Check if data exists
         var existingScore;
 
         if (localStorageData) {
-            // Parse the data
+            //Parse the data
             existingScore = JSON.parse(localStorageData);
         } else {
-            // Initialize an empty array if no data exists
+            //Initialize an empty array if no data exists
             existingScore = [];
         };
-        // Add the new scoreListItem to the array
+        //Add the new scoreListItem to the array
         existingScore.push(scoreListItem);
 
-        // Save the updated array back to local storage
+        //Save the updated array back to local storage
         localStorage.setItem("SavedScoreList", JSON.stringify(existingScore));
-    }
+    };
 };
 
