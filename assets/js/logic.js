@@ -12,8 +12,9 @@ var submitButton = document.querySelector("#submit");
 
 var timerOnDisplay = 75;
 var questionIndex = 0;
-var timerInterval; // Declare timerInterval globally
+var timerInterval; 
 
+////---------Start Screen----------
 // A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
     timerEl.textContent = 75;
@@ -35,6 +36,7 @@ startButton.addEventListener("click", function () {
     showQuestion();
 });
 
+//---------Question Screen----------
 // Function to display a question
 function showQuestion() {
     var currentQuestion = questions[questionIndex].question;
@@ -51,7 +53,6 @@ function showQuestion() {
 };
 
 // When answer is clicked, the next question appears
-
 choicesEl.addEventListener("click", function (event) {
     var userAnswer = event.target;
     feedbackEl.setAttribute("class", "feedback start");
@@ -80,8 +81,7 @@ choicesEl.addEventListener("click", function (event) {
     }
 });
 
-
-
+//---------End Screen----------
 // When the game ends, it should display their score and give the user the ability to save their initials and their score
 function endQuiz() {
     finalScoreEl.textContent = timerOnDisplay;
@@ -91,23 +91,35 @@ function endQuiz() {
     
 };
 
+// Error prevention: User sees message before typing
+initialsInput.addEventListener("click", function () {
+    feedbackEl.textContent ="Please enter no more than 3 characters!" ;
+})
+
 var inputDisplay = "";
-initialsInput.addEventListener("keyup", function (event) {  
-    event.preventDefault();
-    feedbackEl.setAttribute("class", "hide");
+initialsInput.addEventListener("input", function () {  
+    //Convert all keys to upper case
     initialsInput.value = initialsInput.value.toUpperCase();
-    // Access value of pressed key with key property
-    // var userInput = event.key.toUpperCase();
-    // var alphabetNumericCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789 '.split('');
-
-    // // Set the maxlength attribute based on the HTML max attribute
-    initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));
-
-    // if (alphabetNumericCharacters.includes(userInput)) {
-    //     initialsInput.value += userInput;
-    // };
-     
-    // console.log(userInput);
-    // console.log(initialsInput);
+    inputDisplay = initialsInput.value;
+   
+    // Set the maxlength attribute based on the HTML max attribute
+    initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));  
 });
+
+// Submit the user input and time/score
+submitButton.addEventListener("click", savePlayer);
+
+function savePlayer() {
+    //Check the input is valid before submitting and save to localStorage
+    if (!inputDisplay.trim()) {
+        alert("Error: \nPlease enter your initials!");
+        return;
+    } else {
+        //Save 'inputDisplay' for initials and 'timerOnDisplay' for the score
+        localStorage.setItem("savedInitials", inputDisplay);
+        localStorage.setItem("savedScore", timerOnDisplay);
+        // Redirect to highscores.html
+        window.location.href = "highscores.html";
+    }
+};
 
