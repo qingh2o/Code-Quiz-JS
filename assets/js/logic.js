@@ -14,6 +14,9 @@ var timerOnDisplay = 75;
 var questionIndex = 0;
 var timerInterval;
 
+var correctAudio = new Audio("./assets/sfx/correct.wav");
+var incorrectAudio = new Audio("./assets/sfx/incorrect.wav");
+
 //---------Start Screen----------
 // A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
@@ -70,8 +73,10 @@ choicesEl.addEventListener("click", function (event) {
     //If the answer clicked was incorrect then subtract time from the clock
     if (userAnswer.textContent === questions[questionIndex].correctAnswer) {
         feedbackEl.textContent = "Question " + [questionIndex + 1] + ": Correct!";
+        correctAudio.play(); 
     } else {
         feedbackEl.textContent = "Question " + [questionIndex + 1] + ": Incorrect!";
+        incorrectAudio.play(); 
         timerOnDisplay -= 10;
 
         // Ensure that timerOnDisplay does not go below 0
@@ -80,7 +85,6 @@ choicesEl.addEventListener("click", function (event) {
             timerEl.textContent = timerOnDisplay;
         }
     };
-
     questionIndex++;
 
     //Quiz end when all questions are answered or the timer reaches 0. 
