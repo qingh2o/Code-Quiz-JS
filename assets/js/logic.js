@@ -14,14 +14,18 @@ var timerOnDisplay = 75;
 var questionIndex = 0;
 var timerInterval;
 
-////---------Start Screen----------
+//---------Start Screen----------
 // A start button that when clicked a timer starts and the first question appears.
 startButton.addEventListener("click", function () {
+    //75 displayed on screen
     timerEl.textContent = 75;
+
     //Change to question screen
     startScreenEl.setAttribute("class", "hide");
     questionsScreenEl.setAttribute("class", "start");
     questionsScreenEl.setAttribute("style", "text-align: left");
+
+    //Timer starts
     timerInterval = setInterval(function () {
         if (timerOnDisplay > 0) {
             timerOnDisplay--;
@@ -29,20 +33,25 @@ startButton.addEventListener("click", function () {
         }
         if (timerOnDisplay <= 0 || questionIndex === questions.length) {
             clearInterval(timerInterval);
+
             //Change to end screen
             endQuiz();
         }
     }, 1000);
+
+    //First question appears
     showQuestion();
 });
 
 //---------Question Screen----------
-// Function to display a question
+//Function to display question and answer buttons 
 function showQuestion() {
     var currentQuestion = questions[questionIndex].question;
     questionTitle.textContent = currentQuestion;
-    // Clear previous buttons when next question come up
+
+    //Clear previous buttons when next question come up
     choicesEl.innerHTML = "";
+
     //Questions contain buttons for each answer.
     var currentChoices = questions[questionIndex].choices;
     for (var i = 0; i < currentChoices.length; i++) {
@@ -52,7 +61,7 @@ function showQuestion() {
     };
 };
 
-// When answer is clicked, the next question appears
+//When answer is clicked, the next question appears
 choicesEl.addEventListener("click", function (event) {
     var userAnswer = event.target;
     feedbackEl.setAttribute("class", "feedback start");
@@ -64,40 +73,43 @@ choicesEl.addEventListener("click", function (event) {
     } else {
         feedbackEl.textContent = "Question " + [questionIndex + 1] + ": Incorrect!";
         timerOnDisplay -= 10;
+
         // Ensure that timerOnDisplay does not go below 0
         if (timerOnDisplay < 0) {
             timerOnDisplay = 0;
             timerEl.textContent = timerOnDisplay;
         }
-    }
+    };
 
     questionIndex++;
-    // The quiz should end when all questions are answered or the timer reaches 0. 
+
+    //Quiz end when all questions are answered or the timer reaches 0. 
     if (timerOnDisplay > 0 && questionIndex < questions.length) {
         showQuestion();
     } else {
         //Change to end screen
         endQuiz();
-    }
+    };
 });
 
 //---------End Screen----------
-// When the game ends, it should display their score and give the user the ability to save their initials and their score
+//Function to display user score
 function endQuiz() {
     finalScoreEl.textContent = timerOnDisplay;
     endScreenEl.setAttribute("class", "start");
     endScreenEl.setAttribute("style", "text-align: left");
     questionsScreenEl.setAttribute("class", "hide");
-
 };
 
-// Error prevention: User sees message before typing
+//Error prevention: User sees message before typing
 initialsInput.addEventListener("click", function () {
     feedbackEl.textContent = "Please enter no more than 3 characters!";
-})
+});
 
 var inputDisplay = "";
+
 initialsInput.addEventListener("input", function () {
+
     //Convert all keys to upper case
     initialsInput.value = initialsInput.value.toUpperCase();
     inputDisplay = initialsInput.value;
@@ -130,6 +142,7 @@ function saveInitialsScore() {
 
         // Check if data exists
         var existingScore;
+
         if (localStorageData) {
             // Parse the data
             existingScore = JSON.parse(localStorageData);
@@ -137,7 +150,7 @@ function saveInitialsScore() {
             // Initialize an empty array if no data exists
             existingScore = [];
         };
-        // Add the new scoreLi to the array
+        // Add the new scoreListItem to the array
         existingScore.push(scoreListItem);
 
         // Save the updated array back to local storage
