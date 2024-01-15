@@ -12,7 +12,7 @@ var submitButton = document.querySelector("#submit");
 
 var timerOnDisplay = 75;
 var questionIndex = 0;
-var timerInterval; 
+var timerInterval;
 
 ////---------Start Screen----------
 // A start button that when clicked a timer starts and the first question appears.
@@ -88,38 +88,60 @@ function endQuiz() {
     endScreenEl.setAttribute("class", "start");
     endScreenEl.setAttribute("style", "text-align: left");
     questionsScreenEl.setAttribute("class", "hide");
-    
+
 };
 
 // Error prevention: User sees message before typing
 initialsInput.addEventListener("click", function () {
-    feedbackEl.textContent ="Please enter no more than 3 characters!" ;
+    feedbackEl.textContent = "Please enter no more than 3 characters!";
 })
 
 var inputDisplay = "";
-initialsInput.addEventListener("input", function () {  
+initialsInput.addEventListener("input", function () {
     //Convert all keys to upper case
     initialsInput.value = initialsInput.value.toUpperCase();
     inputDisplay = initialsInput.value;
-   
+
     // Set the maxlength attribute based on the HTML max attribute
-    initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));  
+    initialsInput.setAttribute("maxlength", initialsInput.getAttribute("max"));
 });
 
 // Submit the user input and time/score
-submitButton.addEventListener("click", savePlayer);
+submitButton.addEventListener("click", saveInitialsScore);
 
-function savePlayer() {
+function saveInitialsScore() {
     //Check the input is valid before submitting and save to localStorage
     if (!inputDisplay.trim()) {
         alert("Error: \nPlease enter your initials!");
         return;
     } else {
-        //Save 'inputDisplay' for initials and 'timerOnDisplay' for the score
-        localStorage.setItem("savedInitials", inputDisplay);
-        localStorage.setItem("savedScore", timerOnDisplay);
         // Redirect to highscores.html
         window.location.href = "highscores.html";
+
+        //Save 'inputDisplay' for initials and 'timerOnDisplay' for the score
+        var scoreListItem = {
+            userInitials: inputDisplay.trim(),
+            userScore: timerOnDisplay
+        };
+
+        // Retrieve data from local storage
+        var localStorageKey = "SavedScoreList";
+        var localStorageData = localStorage.getItem(localStorageKey);
+
+        // Check if data exists
+        var existingScore;
+        if (localStorageData) {
+            // Parse the data
+            existingScore = JSON.parse(localStorageData);
+        } else {
+            // Initialize an empty array if no data exists
+            existingScore = [];
+        };
+        // Add the new scoreLi to the array
+        existingScore.push(scoreListItem);
+
+        // Save the updated array back to local storage
+        localStorage.setItem("SavedScoreList", JSON.stringify(existingScore));
     }
 };
 
