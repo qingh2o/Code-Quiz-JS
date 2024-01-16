@@ -4,7 +4,7 @@ Module 6 Challenge Web APIs: Code Quiz
 ## Description 
 
 This Code-Quiz-JS was created for bootcamp students who were taking the sixth week's challenge. In this challenge, my task was to create a code quiz that contains the following requirements:
-The password generator application must meet the following critical requirements:
+
 * A start button that when clicked a timer starts and the first question appears. 
   * Questions contain buttons for each answer.
   * When answer is clicked, the next question appears
@@ -17,6 +17,12 @@ The password generator application must meet the following critical requirements
 N/A
 
 ## Usage 
+
+### User flow with images
+
+
+
+![Page With Chrome DevTools Screenshot](./screenshots/inspect_page_dev.png)
 
 ## Credits
 
