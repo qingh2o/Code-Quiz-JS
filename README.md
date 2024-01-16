@@ -20,7 +20,7 @@ N/A
 
 To use Code-Quiz-JS,  you can review each file. 
 
-To check whether the application meets critical requirements, open the webpage [Code Quiz](https://qingh2o.github.io/Code-Quiz-JSt/). 
+To check whether the application meets critical requirements, open the webpage [Code Quiz](https://qingh2o.github.io/Code-Quiz-JS/). 
 
 Once the Code-Quiz-JS web page loads, the application should look similar to the screenshot below.
 ![Page Default Screenshot](./screenshots/default_screen.png)
