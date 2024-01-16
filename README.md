@@ -19,6 +19,7 @@ N/A
 ## Usage 
 
 To use Code-Quiz-JS,  you can review each file. 
+
 To check whether the application meets critical requirements, open the webpage [Code Quiz](https://qingh2o.github.io/Code-Quiz-JSt/). 
 
 Once the Code-Quiz-JS web page loads, the application should look similar to the screenshot below.
@@ -34,7 +35,6 @@ Once the Code-Quiz-JS web page loads, the application should look similar to the
     * If the answer is incorrect, display feedback from the previous question and play the matching audio, subtracting 10 seconds from the clock.
     ![Incorrect Answer](./screenshots/incorrect_answer.png)
 * Display the user's score and let the user save their initials and score after the game ends.
-
 ![Input Submit](./screenshots/input_submit.png)
 * Alert an error message when the user enters nothing or types spaces.
 ![Error Message Without Input](./screenshots/error_no_input.png)
@@ -57,7 +57,6 @@ Once the Code-Quiz-JS web page loads, the application should look similar to the
 Open Chrome DevTools by right-clicking the page and selecting "Inspect". An Elements panel should open either below or to the side of the webpage in the browser. Click on the Console to see if there are any errors.
 
 The "Inspect" page should look similar to the screenshot below.
-
 ![Page With Chrome DevTools Screenshot](./screenshots/inspect_page_dev.png)
 
 ## Credits
